@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(FinancialProgramming VERSION 0.1.0)
 
+# Use C++11
+set(CMAKE_CXX_STANDARD 11)
+
 add_subdirectory(SimpleInterestRates)
 
 include(CTest)
