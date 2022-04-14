@@ -13,6 +13,42 @@ enum class Choice
 
 const char *ChoiceTypes[4] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow"};
 
+void cashFlow()
+{
+    double rate = 1.0;
+    double value = 1.0;
+    unsigned period = 1;
+
+    std::cout << "Enter <interest rate> or -1" << std::endl;
+    std::cin >> rate;
+
+    if (rate == -1)
+        return;
+
+    CashFlowCalculator cfc(rate);
+
+    while (true)
+    {
+
+        std::cout << "Enter <period> or -1" << std::endl;
+        std::cin >> period;
+
+        if (period == -1)
+            break;
+
+        std::cout << "Enter <value> or -1" << std::endl;
+        std::cin >> value;
+
+        if (value == -1)
+            break;
+
+        cfc.addCashPayment(value, period);
+    }
+
+    double result = cfc.presentValue();
+    std::cout << " The present value is " << result << std::endl;
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -49,39 +85,7 @@ int main(int argc, char **arg)
             break;
         case Choice::CashFlow:
         {
-            double rate = 1.0;
-            double value = 1.0;
-            unsigned period = 1;
-
-            std::cout << "Enter <interest rate> or -1" << std::endl;
-            std::cin >> rate;
-
-            if (rate == -1)
-                break;
-
-            CashFlowCalculator cfc(rate);
-
-            while (true)
-            {
-
-                std::cout << "Enter <period> or -1" << std::endl;
-                std::cin >> period;
-
-                if (period == -1)
-                    break;
-
-                std::cout << "Enter <value> or -1" << std::endl;
-                std::cin >> value;
-
-                if (value == -1)
-                    break;
-
-                cfc.addCashPayment(value, period);
-            }
-
-            double result = cfc.presentValue();
-            std::cout << " The present value is " << result << std::endl;
-
+            cashFlow();
             break;
         }
         default:
