@@ -2,6 +2,7 @@
 #include "SimpleInterestRates/SimpleInterestRates.hpp"
 #include "CompoundInterestRates/CompoundInterest.hpp"
 #include "CashFlow/CashFlowCalculator.hpp"
+#include "ModelingBonds/BondCalculator.hpp"
 
 enum class Choice
 {
@@ -9,9 +10,10 @@ enum class Choice
     SimpleInterestRates = 1,
     CompoundInterest = 2,
     CashFlow = 3,
+    ModelingBonds = 4,
 };
 
-const char *ChoiceTypes[4] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow"};
+const char *ChoiceTypes[5] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds"};
 
 void cashFlow()
 {
@@ -60,6 +62,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::SimpleInterestRates] << ": " << (int)Choice::SimpleInterestRates << "\n\t"
                   << ChoiceTypes[(int)Choice::CompoundInterest] << ": " << (int)Choice::CompoundInterest << "\n\t"
                   << ChoiceTypes[(int)Choice::CashFlow] << ": " << (int)Choice::CashFlow << "\n\t"
+                  << ChoiceTypes[(int)Choice::ModelingBonds] << ": " << (int)Choice::ModelingBonds << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -86,6 +89,28 @@ int main(int argc, char **arg)
         case Choice::CashFlow:
         {
             cashFlow();
+            break;
+        }
+        case Choice::ModelingBonds:
+        {
+            std::cout << "usage: progName <institution> <principal> <coupon> <num periods>"
+                      << std::endl;
+
+            std::string issuer = "";
+            double principal = 0;
+            double coupon = 0;
+            int num_periods = 0;
+
+            std::cin >> issuer;
+            std::cin >> principal;
+            std::cin >> coupon;
+            std::cin >> num_periods;
+
+            BondCalculator bc(issuer, principal, coupon, num_periods);
+
+            std::cout << "reading information for bond issued by " << issuer << std::endl;
+            std::cout << "the internal rate of return is " << bc.interestRate() << std::endl;
+
             break;
         }
         default:

@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(CashFlow VERSION 0.1.0)
+project(ModelingBonds VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
 
 add_library(
-  CashFlow 
-  CashFlowCalculator.cpp
+  ModelingBonds 
+  BondCalculator.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

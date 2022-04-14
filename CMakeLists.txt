@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 add_subdirectory(SimpleInterestRates)
 add_subdirectory(CompoundInterestRates)
 add_subdirectory(CashFlow)
+add_subdirectory(ModelingBonds)
 
 include(CTest)
 enable_testing()
@@ -18,6 +19,7 @@ add_executable(FinancialProgramming
   CompoundInterestRates/CompoundInterest.cpp
   CompoundInterestRates/CompoundInterestRateCalculator.cpp
   CashFlow/CashFlowCalculator.cpp
+  ModelingBonds/BondCalculator.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
