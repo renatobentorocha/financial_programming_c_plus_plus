@@ -8,6 +8,7 @@ add_subdirectory(SimpleInterestRates)
 add_subdirectory(CompoundInterestRates)
 add_subdirectory(CashFlow)
 add_subdirectory(ModelingBonds)
+add_subdirectory(MovingAverage)
 
 include(CTest)
 enable_testing()
@@ -20,6 +21,7 @@ add_executable(FinancialProgramming
   CompoundInterestRates/CompoundInterestRateCalculator.cpp
   CashFlow/CashFlowCalculator.cpp
   ModelingBonds/BondCalculator.cpp
+  MovingAverage/MovingAverage.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
