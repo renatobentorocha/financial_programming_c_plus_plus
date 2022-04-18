@@ -4,6 +4,7 @@
 #include "CashFlow/CashFlowCalculator.hpp"
 #include "ModelingBonds/BondCalculator.hpp"
 #include "MovingAverage/MovingAverage.hpp"
+#include "CalculatingVolatility/VolatilityCalculator.hpp"
 
 enum class Choice
 {
@@ -13,9 +14,10 @@ enum class Choice
     CashFlow = 3,
     ModelingBonds = 4,
     MovingAverage = 5,
+    CalculatingVolatility = 6,
 };
 
-const char *ChoiceTypes[6] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage"};
+const char *ChoiceTypes[7] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility"};
 
 void simpleInterestRates()
 {
@@ -119,6 +121,26 @@ void movingAverage()
     }
 }
 
+void volatilityCalculator()
+{
+    double price;
+    VolatilityCalculator vc;
+    while (true)
+    {
+        std::cout << "Enter a price quote" << std::endl;
+        std::cin >> price;
+
+        if (price == -1)
+            break;
+
+        vc.addPrice(price);
+    }
+
+    std::cout << "range volatility is " << vc.rangeVolatility() << std::endl;
+    std::cout << "average daily range is " << vc.avgDailyRange() << std::endl;
+    std::cout << "standard deviation is " << vc.stdDev() << std::endl;
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -132,6 +154,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::CashFlow] << ": " << (int)Choice::CashFlow << "\n\t"
                   << ChoiceTypes[(int)Choice::ModelingBonds] << ": " << (int)Choice::ModelingBonds << "\n\t"
                   << ChoiceTypes[(int)Choice::MovingAverage] << ": " << (int)Choice::MovingAverage << "\n\t"
+                  << ChoiceTypes[(int)Choice::CalculatingVolatility] << ": " << (int)Choice::CalculatingVolatility << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -176,6 +199,12 @@ int main(int argc, char **arg)
         case Choice::MovingAverage:
         {
             movingAverage();
+            std::cout << std::endl;
+            break;
+        }
+        case Choice::CalculatingVolatility:
+        {
+            volatilityCalculator();
             std::cout << std::endl;
             break;
         }
