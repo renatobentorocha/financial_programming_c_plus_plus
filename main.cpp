@@ -5,6 +5,8 @@
 #include "ModelingBonds/BondCalculator.hpp"
 #include "MovingAverage/MovingAverage.hpp"
 #include "CalculatingVolatility/VolatilityCalculator.hpp"
+#include "InstrumentCorrelation/CorrelationCalculator.hpp"
+#include "TimeSeries/TimeSeries.hpp"
 
 enum class Choice
 {
@@ -15,9 +17,10 @@ enum class Choice
     ModelingBonds = 4,
     MovingAverage = 5,
     CalculatingVolatility = 6,
+    InstrumentCorrelation = 7,
 };
 
-const char *ChoiceTypes[7] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility"};
+const char *ChoiceTypes[8] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation"};
 
 void simpleInterestRates()
 {
@@ -141,6 +144,29 @@ void volatilityCalculator()
     std::cout << "standard deviation is " << vc.stdDev() << std::endl;
 }
 
+void instrumentCorrelation()
+{
+    double price;
+    TimeSeries tsa;
+    TimeSeries tsb;
+
+    for (;;)
+    {
+        std::cin >> price;
+        if (price == -1)
+        {
+            break;
+        }
+        tsa.addValue(price);
+        std::cin >> price;
+        tsb.addValue(price);
+    }
+
+    CorrelationCalculator cCalc(tsa, tsb);
+    auto correlation = cCalc.correlation();
+    std::cout << "correlation is " << correlation << std::endl;
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -155,6 +181,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::ModelingBonds] << ": " << (int)Choice::ModelingBonds << "\n\t"
                   << ChoiceTypes[(int)Choice::MovingAverage] << ": " << (int)Choice::MovingAverage << "\n\t"
                   << ChoiceTypes[(int)Choice::CalculatingVolatility] << ": " << (int)Choice::CalculatingVolatility << "\n\t"
+                  << ChoiceTypes[(int)Choice::InstrumentCorrelation] << ": " << (int)Choice::InstrumentCorrelation << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -205,6 +232,12 @@ int main(int argc, char **arg)
         case Choice::CalculatingVolatility:
         {
             volatilityCalculator();
+            std::cout << std::endl;
+            break;
+        }
+        case Choice::InstrumentCorrelation:
+        {
+            instrumentCorrelation();
             std::cout << std::endl;
             break;
         }

@@ -4,12 +4,10 @@ project(InstrumentCorrelation VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-include_directories(TimeSeries)
-
 add_library(
   InstrumentCorrelation 
-  InstrumentCorrelation.cpp
-  TimeSeries/TimeSeries.cpp
+  CorrelationCalculator.cpp
+  ../TimeSeries/TimeSeries.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

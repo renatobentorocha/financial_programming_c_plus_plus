@@ -10,6 +10,8 @@ add_subdirectory(CashFlow)
 add_subdirectory(ModelingBonds)
 add_subdirectory(MovingAverage)
 add_subdirectory(CalculatingVolatility)
+add_subdirectory(InstrumentCorrelation)
+add_subdirectory(TimeSeries)
 
 include(CTest)
 enable_testing()
@@ -24,6 +26,8 @@ add_executable(FinancialProgramming
   ModelingBonds/BondCalculator.cpp
   MovingAverage/MovingAverage.cpp
   CalculatingVolatility/VolatilityCalculator.cpp
+  InstrumentCorrelation/CorrelationCalculator.cpp
+  TimeSeries/TimeSeries.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
