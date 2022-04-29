@@ -7,6 +7,7 @@
 #include "CalculatingVolatility/VolatilityCalculator.hpp"
 #include "InstrumentCorrelation/CorrelationCalculator.hpp"
 #include "TimeSeries/TimeSeries.hpp"
+#include "FundamentalIndicators/FundamentalsCalc.hpp"
 
 enum class Choice
 {
@@ -18,9 +19,10 @@ enum class Choice
     MovingAverage = 5,
     CalculatingVolatility = 6,
     InstrumentCorrelation = 7,
+    FundamentalIndicators = 8,
 };
 
-const char *ChoiceTypes[8] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation"};
+const char *ChoiceTypes[9] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation", "FundamentalIndicators"};
 
 void simpleInterestRates()
 {
@@ -167,6 +169,29 @@ void instrumentCorrelation()
     std::cout << "correlation is " << correlation << std::endl;
 }
 
+void fundamentalIndicators()
+{
+    FundamentalsCalculator fc("AAPL", 543.99, 12.20);
+    // values are in millions
+    fc.setAssets(243139);
+    fc.setBookValue(165234);
+    fc.setEarnings(35885);
+    fc.setEpsGrowth(0.22);
+    fc.setExpectedEarnings(39435);
+    fc.setLiabilitiesAndIntangibles(124642);
+    fc.setNetIncome(37235);
+    fc.setNumOfShares(891990);
+    fc.setShareHoldersEquity(123549);
+
+    std::cout << "P/E: " << fc.PE() / 1000 << std::endl; // prices in thousands
+    std::cout << "forward P/E: " << fc.forwardPE() / 1000 << std::endl;
+    std::cout << "book value: " << fc.bookValue() << std::endl;
+    std::cout << "price to book: " << fc.priceToBookRatio() << std::endl;
+    std::cout << "price earnings to growth: " << fc.priceEarningsToGrowth() << std::endl;
+    std::cout << "return on equity: " << fc.returnOnEquity() << std::endl;
+    std::cout << "dividend: " << fc.getDividend() << std::endl;
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -182,6 +207,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::MovingAverage] << ": " << (int)Choice::MovingAverage << "\n\t"
                   << ChoiceTypes[(int)Choice::CalculatingVolatility] << ": " << (int)Choice::CalculatingVolatility << "\n\t"
                   << ChoiceTypes[(int)Choice::InstrumentCorrelation] << ": " << (int)Choice::InstrumentCorrelation << "\n\t"
+                  << ChoiceTypes[(int)Choice::FundamentalIndicators] << ": " << (int)Choice::FundamentalIndicators << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -238,6 +264,12 @@ int main(int argc, char **arg)
         case Choice::InstrumentCorrelation:
         {
             instrumentCorrelation();
+            std::cout << std::endl;
+            break;
+        }
+        case Choice::FundamentalIndicators:
+        {
+            fundamentalIndicators();
             std::cout << std::endl;
             break;
         }
