@@ -13,6 +13,7 @@ add_subdirectory(CalculatingVolatility)
 add_subdirectory(InstrumentCorrelation)
 add_subdirectory(TimeSeries)
 add_subdirectory(FundamentalIndicators)
+add_subdirectory(InterestRateEngine)
 
 include(CTest)
 enable_testing()
@@ -30,6 +31,7 @@ add_executable(FinancialProgramming
   InstrumentCorrelation/CorrelationCalculator.cpp
   TimeSeries/TimeSeries.cpp
   FundamentalIndicators/FundamentalsCalc.cpp
+  InterestRateEngine/InvestmentInstrument.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

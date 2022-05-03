@@ -8,6 +8,8 @@
 #include "InstrumentCorrelation/CorrelationCalculator.hpp"
 #include "TimeSeries/TimeSeries.hpp"
 #include "FundamentalIndicators/FundamentalsCalc.hpp"
+#include "InterestRateEngine/InvestmentInstrument.hpp"
+#include "InterestRateEngine/IntRateEngine.hpp"
 
 enum class Choice
 {
@@ -20,13 +22,14 @@ enum class Choice
     CalculatingVolatility = 6,
     InstrumentCorrelation = 7,
     FundamentalIndicators = 8,
+    InvestmentInstrument = 9,
 };
 
-const char *ChoiceTypes[9] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation", "FundamentalIndicators"};
+const char *ChoiceTypes[10] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation", "FundamentalIndicators", "InvestmentInstrument"};
 
 void simpleInterestRates()
 {
-    std::cout << "SimpleInterestRates: " << calculateSimpleInterestRate(100, 1) << "\n";
+    std::cout << "SimpleInterestRates: " << calculateSimpleInterestRate(100, 0.1) << "\n";
 }
 
 void compoundInterest()
@@ -192,6 +195,23 @@ void fundamentalIndicators()
     std::cout << "dividend: " << fc.getDividend() << std::endl;
 }
 
+void investmentInstrument()
+{
+    IntRateEngine<BondInstrument> engineA;
+    IntRateEngine<MortgageInstrument> engineB;
+
+    BondInstrument bond(40000, 250);
+    MortgageInstrument mortgage(250, 50000, 5000);
+
+    engineA.setInstrument(bond);
+    engineB.setInstrument(mortgage);
+
+    std::cout << " bond annual int rate: " << engineA.getAnnualIntRate() * 100 << "%"
+              << std::endl;
+    std::cout << " mortgage annual int rate: " << engineB.getAnnualIntRate() * 100 << "%"
+              << std::endl;
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -208,6 +228,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::CalculatingVolatility] << ": " << (int)Choice::CalculatingVolatility << "\n\t"
                   << ChoiceTypes[(int)Choice::InstrumentCorrelation] << ": " << (int)Choice::InstrumentCorrelation << "\n\t"
                   << ChoiceTypes[(int)Choice::FundamentalIndicators] << ": " << (int)Choice::FundamentalIndicators << "\n\t"
+                  << ChoiceTypes[(int)Choice::InvestmentInstrument] << ": " << (int)Choice::InvestmentInstrument << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -270,6 +291,12 @@ int main(int argc, char **arg)
         case Choice::FundamentalIndicators:
         {
             fundamentalIndicators();
+            std::cout << std::endl;
+            break;
+        }
+        case Choice::InvestmentInstrument:
+        {
+            investmentInstrument();
             std::cout << std::endl;
             break;
         }
