@@ -10,6 +10,7 @@
 #include "FundamentalIndicators/FundamentalsCalc.hpp"
 #include "InterestRateEngine/InvestmentInstrument.hpp"
 #include "InterestRateEngine/IntRateEngine.hpp"
+#include "SmartPointer/FinancialStatement.hpp"
 
 enum class Choice
 {
@@ -23,9 +24,10 @@ enum class Choice
     InstrumentCorrelation = 7,
     FundamentalIndicators = 8,
     InvestmentInstrument = 9,
+    FinancialStatement = 10,
 };
 
-const char *ChoiceTypes[10] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation", "FundamentalIndicators", "InvestmentInstrument"};
+const char *ChoiceTypes[11] = {"Go_Out", "SimpleInterestRates", "CompoundInterest", "CashFlow", "ModelingBonds", "MovingAverage", "CalculatingVolatility", "InstrumentCorrelation", "FundamentalIndicators", "InvestmentInstrument", "FinancialStatement"};
 
 void simpleInterestRates()
 {
@@ -212,6 +214,16 @@ void investmentInstrument()
               << std::endl;
 }
 
+void financialStatement()
+{
+    std::unique_ptr<FinancialStatement> fs = getSampleStatement();
+    transferFinancialStatement(fs);
+
+    // statement is invalid
+    std::cout << "Financial Statement return: " << fs->getReturn() << std::endl;
+    // the autopointer is released at the end of the scope...
+}
+
 int main(int argc, char **arg)
 {
     Choice choice = Choice::SimpleInterestRates;
@@ -229,6 +241,7 @@ int main(int argc, char **arg)
                   << ChoiceTypes[(int)Choice::InstrumentCorrelation] << ": " << (int)Choice::InstrumentCorrelation << "\n\t"
                   << ChoiceTypes[(int)Choice::FundamentalIndicators] << ": " << (int)Choice::FundamentalIndicators << "\n\t"
                   << ChoiceTypes[(int)Choice::InvestmentInstrument] << ": " << (int)Choice::InvestmentInstrument << "\n\t"
+                  << ChoiceTypes[(int)Choice::FinancialStatement] << ": " << (int)Choice::FinancialStatement << "\n\t"
                   << ChoiceTypes[(int)Choice::Go_Out] << ": " << (int)Choice::Go_Out;
 
         std::cout << "\n\n";
@@ -297,6 +310,12 @@ int main(int argc, char **arg)
         case Choice::InvestmentInstrument:
         {
             investmentInstrument();
+            std::cout << std::endl;
+            break;
+        }
+        case Choice::FinancialStatement:
+        {
+            financialStatement();
             std::cout << std::endl;
             break;
         }
