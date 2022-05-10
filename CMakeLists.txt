@@ -15,6 +15,7 @@ add_subdirectory(TimeSeries)
 add_subdirectory(FundamentalIndicators)
 add_subdirectory(InterestRateEngine)
 add_subdirectory(SmartPointer)
+add_subdirectory(CreditRatings)
 
 include(CTest)
 enable_testing()
@@ -34,6 +35,8 @@ add_executable(FinancialProgramming
   FundamentalIndicators/FundamentalsCalc.cpp
   InterestRateEngine/InvestmentInstrument.cpp
   SmartPointer/FinancialStatement.cpp
+  CreditRatings/CreditRisk.cpp
+  CreditRatings/RiskCalculator.cpp
   )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
