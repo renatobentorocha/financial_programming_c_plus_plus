@@ -29,26 +29,30 @@ void RiskCalculator::addCreditRisk(std::shared_ptr<CreditRisk> risk)
 
 CreditRisk::RiskType RiskCalculator::portfolioMaxRisk()
 {
-  CreditRisk::RiskType risk = CreditRisk::RiskType::AAA;
-  for (int i = 0; i < m_creditRisks.size(); ++i)
+  auto risk = CreditRisk::RiskType::AAA;
+
+  for (auto p = m_creditRisks.begin(); p != m_creditRisks.end(); ++p)
   {
-    if (m_creditRisks[i]->getRating() < risk)
+    if ((*p)->getRating() > risk)
     {
-      risk = m_creditRisks[i]->getRating();
+      risk = (*p)->getRating();
     }
   }
+
   return risk;
 }
 
 CreditRisk::RiskType RiskCalculator::portfolioMinRisk()
 {
-  CreditRisk::RiskType risk = CreditRisk::RiskType::C;
-  for (int i = 0; i < m_creditRisks.size(); ++i)
+  auto risk = CreditRisk::RiskType::C;
+
+  for (auto p = m_creditRisks.begin(); p != m_creditRisks.end(); ++p)
   {
-    if (m_creditRisks[i]->getRating() > risk)
+    if ((*p)->getRating() < risk)
     {
-      risk = m_creditRisks[i]->getRating();
+      risk = (*p)->getRating();
     }
   }
+
   return risk;
 }
